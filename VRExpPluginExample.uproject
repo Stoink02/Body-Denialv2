@@ -61,6 +61,10 @@
 		{
 			"Name": "ModelingToolsEditorMode",
 			"Enabled": true
+		},
+		{
+			"Name": "MediaIOFramework",
+			"Enabled": true
 		}
 	],
 	"AdditionalPluginDirectories": [
