@@ -10,7 +10,7 @@
 
 
 ### Supported Versions
-- Tested and compatible with Unreal Engine versions 4.26 to 5.5.
+- Tested and compatible with Unreal Engine versions 4.26 to 5.6.
 
 ### Documentation
 
