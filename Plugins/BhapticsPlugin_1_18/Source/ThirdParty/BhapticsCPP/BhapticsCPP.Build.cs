@@ -8,19 +8,24 @@ public class BhapticsCPP : ModuleRules
 	public BhapticsCPP(ReadOnlyTargetRules Target) : base(Target)
 	{
 		Type = ModuleType.External;
+
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
+			// Include path to the public header files
 			PublicSystemIncludePaths.Add("$(ModuleDir)/Public");
+            
+			// Add the library to the additional libraries path
 			PublicAdditionalLibraries.Add(Path.Combine(ModuleDirectory, "Win64", "bhaptics_library.lib"));
+
+			// Delay-load the DLL, so we can load it from the right place first
 			PublicDelayLoadDLLs.Add("bhaptics_library.dll");
-			
+
+			// Ensure that the DLL is staged along with the executable
+			// Adjust the path as necessary based on the plugin's location
 			string runtimeDependencyPath;
-			if (IsGamePlugin(Target))
+			if (IsProjectPlugin(Target))
 			{
-				string pluginRootDir = Path.GetFullPath(Path.Combine(ModuleDirectory, "../../.."));
-				string pluginFolderName = Path.GetFileName(pluginRootDir);
-				
-				runtimeDependencyPath = $"$(ProjectDir)/Plugins/{pluginFolderName}/Source/ThirdParty/BhapticsCPP/Win64/bhaptics_library.dll";
+				runtimeDependencyPath = Path.Combine("$(ProjectDir)", "Plugins", "BhapticsPlugin", "Source", "ThirdParty", "BhapticsCPP", "Win64", "bhaptics_library.dll");
 			}
 			else
 			{
@@ -29,11 +34,16 @@ public class BhapticsCPP : ModuleRules
 			RuntimeDependencies.Add(runtimeDependencyPath);
 		}
 	}
-	private bool IsGamePlugin(ReadOnlyTargetRules Target)
+	private bool IsProjectPlugin(ReadOnlyTargetRules Target)
 	{
+		// Get the full path to the project directory
 		string projectDirectory = Path.GetDirectoryName(Target.ProjectFile.ToString());
+
+		// Normalize paths to ensure consistency in separators and case
 		string normalizedPluginBaseDirectory = Path.GetFullPath(Path.Combine(ModuleDirectory, "../../")).Replace("\\", "/");
 		string normalizedProjectDirectory = projectDirectory.Replace("\\", "/").ToLower();
+
+		// A project plugin's path will include the project directory's path
 		return normalizedPluginBaseDirectory.ToLower().StartsWith(normalizedProjectDirectory);
 	}
 }

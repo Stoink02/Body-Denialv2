@@ -38,38 +38,27 @@
 
   <prebuildCopies>
     <log text="Copying bhaptics aar files"/>
-    <copyFile src="$S(PluginDir)/../BhapticsAndroid/Libraries/bhaptics_ble.aar"
-              dst="$S(BuildDir)/gradle/app/libs/bhaptics_ble.aar" />
-    <copyFile src="$S(PluginDir)/../BhapticsAndroid/Libraries/bhaptics_commons.aar"
-              dst="$S(BuildDir)/gradle/app/libs/bhaptics_commons.aar" />
-    <copyFile src="$S(PluginDir)/../BhapticsAndroid/Libraries/bhaptics_core.aar"
-              dst="$S(BuildDir)/gradle/app/libs/bhaptics_core.aar" />
-    <copyFile src="$S(PluginDir)/../BhapticsAndroid/Libraries/bhaptics_manager.aar"
-              dst="$S(BuildDir)/gradle/app/libs/bhaptics_manager.aar" />
+    <copyFile src="$S(PluginDir)/Libraries/bhaptics_ble.aar"
+            dst="$S(BuildDir)/gradle/bhaptics_ble.aar" />
+    <copyFile src="$S(PluginDir)/Libraries/bhaptics_commons.aar"
+            dst="$S(BuildDir)/gradle/bhaptics_commons.aar" />
+    <copyFile src="$S(PluginDir)/Libraries/bhaptics_core.aar"
+            dst="$S(BuildDir)/gradle/bhaptics_core.aar" />
+    <copyFile src="$S(PluginDir)/Libraries/bhaptics_manager.aar"
+            dst="$S(BuildDir)/gradle/bhaptics_manager.aar" />
   </prebuildCopies>
-  
+
   <AARImports>
-    <AARImport>
-      <Name>bhaptics_ble</Name>
-    </AARImport>
-    <AARImport>
-      <Name>bhaptics_commons</Name>
-    </AARImport>
-    <AARImport>
-      <Name>bhaptics_core</Name>
-    </AARImport>
-    <AARImport>
-      <Name>bhaptics_manager</Name>
-    </AARImport>
   </AARImports>
 
   <buildGradleAdditions>
     <insert>
-      <![CDATA[
-    dependencies {
-      implementation fileTree(dir: 'libs', include: ['bhaptics_*.aar'])
-    }
-    ]]>
+      dependencies {
+      implementation files('../bhaptics_ble.aar')
+      implementation files('../bhaptics_core.aar')
+      implementation files('../bhaptics_commons.aar')
+      implementation files('../bhaptics_manager.aar')
+      }
     </insert>
   </buildGradleAdditions>
 
